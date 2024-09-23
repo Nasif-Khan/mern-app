@@ -7,10 +7,11 @@
     "server": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type" : "module",
   "keywords": [],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Nasif-Khan/mern-app.git"
   },
   "author": "nasif",
   "license": "ISC",
