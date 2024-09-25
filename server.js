@@ -2,7 +2,8 @@ import express from "express"
 import dotenv from "dotenv";
 
 import connectDB from "./src/db/db.js"
-import router from "./src/routers/user.router.js"
+import userRouter from "./src/routers/user.router.js"
+import authRouter from "./src/routers/auth.router.js"
 
 dotenv.config({path: "./.env"});
 
@@ -19,8 +20,8 @@ app.use(express.urlencoded({
 }));
 
 
-app.use('/user', router); 
-
+app.use('/user', userRouter); 
+app.use('/auth', authRouter);
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))

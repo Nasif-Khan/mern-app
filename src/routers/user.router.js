@@ -1,4 +1,4 @@
-import { User } from "../models/User.model.js"
+import { User } from "../models/user.model.js"
 import {Router} from "express"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -23,14 +23,16 @@ router.post('/signup', async (req, res) => {
                     .json({errors: [{msg: "User exists!"}]})
         }
 
+        const salt = await bcrypt.genSalt()
+        const hashedPassword = await bcrypt.hash(password, salt)
         user = await User.create({
             name,
             email,
-            password
+            password: hashedPassword
         })
-
-        const salt = await bcrypt.genSalt()
-        user.password = await bcrypt.hash(password, salt)
+        // user.password = await bcrypt.hash(password, salt)
+        console.log(password)
+        console.log(hashedPassword)
 
         const payload = {
             id: user.id
@@ -58,6 +60,6 @@ router.post('/signup', async (req, res) => {
     }
 })
 
-export default router
+    export default router
 // module.exports = router
 
