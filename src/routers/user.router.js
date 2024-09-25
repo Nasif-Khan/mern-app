@@ -1,6 +1,8 @@
+import { User } from "../models/User.model.js"
 import {Router} from "express"
 import bcrypt from "bcryptjs"
-import { User } from "../models/User.model.js"
+import jwt from "jsonwebtoken"
+
 
 const router = Router()
 
@@ -29,11 +31,24 @@ router.post('/signup', async (req, res) => {
 
         const salt = await bcrypt.genSalt()
         user.password = await bcrypt.hash(password, salt)
+
+        const payload = {
+            id: user.id
+        }
+
+        jwt.sign(payload, 
+            process.env.JWT_SECRET,
+            {expiresIn: 3600},
+            (err, token) => {
+                if (err) throw err
+                res.json({token});
+            }
+        )
         
-        return res.status(200).json({
-            user,
-            msg: "User created!"
-        });
+        // return res.status(200).json({
+        //     user,
+        //     msg: "User created!"
+        // });
 
         // res.json(req.body)
 
